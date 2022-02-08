@@ -1,0 +1,95 @@
+﻿<Window x:Class="UpbitUI.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UpbitUI.View"
+        xmlns:viewmodel="clr-namespace:UpbitUI.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1200">
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- main col0 -->
+        <StackPanel>
+            <Button Command="{Binding Test1}" 
+                    Content="Test" 
+                    HorizontalAlignment="Center" 
+                    MinWidth="100"/>
+        </StackPanel>
+        
+        <!-- main col2 -->
+        <ListView Grid.Column="2"
+                  ItemsSource="{Binding CoinInfos}">
+            <ListView.ItemContainerStyle>
+                <!-- 기본적으로 아래 컨테이너의 크기에 맞게 줄어드는 속성을 Stretch로 변경합니다. -->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <!-- col0 -->
+                        <GridViewColumn Width="60" Header="코인명">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding CoinNameKor}"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding CoinNameEng}" FontSize="9"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <!-- col1 -->
+                        <GridViewColumn Width="100" Header="현재가">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CurrentPrice}"
+                                               TextAlignment="Right"
+                                               FontWeight="Bold"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <!-- col2 -->
+                        <GridViewColumn Width="60" Header="전일대비">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0"
+                                                   Text="{Binding Change24, StringFormat={}{0}%}"
+                                                   TextAlignment="Right"/>
+                                        <TextBlock Grid.Row="1"
+                                                   Text="일일변화값"
+                                                   FontSize="6"
+                                                   TextAlignment="Right"
+                                                   />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+
+    </Grid>
+</Window>
+    
